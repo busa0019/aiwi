@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aisha Health & Wellness Initiative (AHWI)</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Configure Tailwind for custom colors and font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-teal': '#008080', // Deep Teal
+                        'secondary-coral': '#FF6B6B', // Soft Coral/Pink
+                        'accent-gold': '#FFD700', // Gold/Yellow
+                        'bg-light': '#F8F9FA', // Off-White
+                        'deep-teal': '#006666',
+                        'light-coral': '#FF9E9E',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseShadow: {
+                            '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(0, 128, 128, 0.4)' },
+                            '50%': { 'box-shadow': '0 0 0 15px rgba(0, 128, 128, 0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        '3d-rotate': {
+                            '0%': { transform: 'perspective(1000px) rotateY(0deg)' },
+                            '100%': { transform: 'perspective(1000px) rotateY(360deg)' },
+                        },
+                        countUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        fadeInUp: 'fadeInUp 0.8s ease-out both',
+                        pulseShadow: 'pulseShadow 2s infinite',
+                        float: 'float 6s ease-in-out infinite',
+                        wiggle: 'wiggle 1s ease-in-out infinite',
+                        '3d-rotate': '3d-rotate 20s linear infinite',
+                        countUp: 'countUp 1s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base page styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Page Navigation Class */
+        .page-content {
+            display: none;
+            min-height: calc(100vh - 80px); /* Adjust for header height */
+            padding-top: 80px;
+        }
+
+        /* Active link styling */
+        .nav-link.active {
+            font-weight: 700;
+            color: #FF6B6B; /* secondary-coral */
+            border-bottom: 3px solid #FF6B6B;
+        }
+
+        /* 3D Card Effects */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s ease;
+        }
+
+        .card-3d:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0, 128, 128, 0.3);
+        }
+
+        .card-3d-inner {
+            transform-style: preserve-3d;
+        }
+
+        /* Floating animation */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* 3D Button Effects */
+        .btn-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-3px) rotateX(5deg);
+            box-shadow: 0 10px 20px rgba(0, 128, 128, 0.3);
+        }
+
+        /* 3D Image Effects */
+        .img-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s ease;
+        }
+
+        .img-3d:hover {
+            transform: rotateY(5deg) rotateX(3deg) scale(1.02);
+        }
+
+        /* Parallax Scrolling */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Hero Section with 3D effect */
+        .hero-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .hero-content-3d {
+            transform: translateZ(50px);
+        }
+
+        /* Blob Animation */
+        .blob {
+            border-radius: 50% 50% 50% 70%;
+            animation: blob 7s ease-in-out infinite;
+        }
+
+        @keyframes blob {
+            0%, 100% { border-radius: 50% 50% 50% 70%; }
+            25% { border-radius: 60% 40% 70% 50%; }
+            50% { border-radius: 50% 60% 40% 60%; }
+            75% { border-radius: 70% 50% 60% 40%; }
+        }
+
+        /* Donation Progress Bar */
+        .progress-bar {
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #FF6B6B, #FFD700);
+            transition: width 1s ease-in-out;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* 3D Stats */
+        .stat-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s ease;
+        }
+
+        .stat-3d:hover {
+            transform: translateZ(20px);
+        }
+
+        /* Gallery Grid with 3D */
+        .gallery-grid-3d {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-grid-3d {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+        }
+
+        .gallery-item {
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateZ(10px) rotateY(5deg);
+        }
+
+        /* Program Card with 3D */
+        .program-card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s ease;
+        }
+
+        .program-card-3d:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(0, 128, 128, 0.2);
+        }
+
+        /* Creative Image Application 1: Blob Mask (Home) */
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* 1:1 aspect ratio */
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .hero-image-container {
+                padding-top: 100%;
+            }
+        }
+
+        .hero-image-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FF6B6B;
+            border-radius: 50% 50% 50% 70%; /* Creative blob shape */
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-image-mask img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.95;
+            transform: scale(1.05);
+        }
+
+        /* Creative Image Application 2: Backgrounds with Tinted Overlay (Programs) */
+        .program-card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 0.5rem; /* rounded-lg */
+            margin-bottom: 1rem;
+        }
+
+        /* Tinted Overlay */
+        .image-overlay {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
+            transition: background 0.3s ease;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .program-card:hover .image-overlay {
+             background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+        }
+
+        /* Appointment Booking Form */
+        .appointment-form {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Donation Counter */
+        .donation-counter {
+            background: linear-gradient(135deg, #008080, #006666);
+            color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 3D Cursor Follower */
+        .cursor-follower {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #FF6B6B, transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate3d(-50%, -50%, 0) scale(1);
+            transition: transform 0.1s ease;
+            mix-blend-mode: screen;
+        }
+
+        .cursor-follower.active {
+            transform: translate3d(-50%, -50%, 0) scale(2);
+            background: radial-gradient(circle, #FFD700, transparent);
+        }
+
+        /* Newsletter Form */
+        .newsletter-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.5rem 0 0 0.5rem;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: #FF6B6B;
+            color: white;
+            border: none;
+            border-radius: 0 0.5rem 0.5rem 0;
+            padding: 0 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #FF5252;
+        }
+
+        /* Stats Animation */
+        .stat-number {
+            animation: countUp 1s ease-out forwards;
+        }
+
+        .animate-stats {
+            animation: countUp 2s ease-out infinite alternate;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .gallery-grid-3d {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .card-3d:hover, .program-card-3d:hover {
+                transform: none;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input, .newsletter-btn {
+                border-radius: 0.5rem;
+                width: 100%;
+            }
+            
+            .newsletter-btn {
+                margin-top: 0.5rem;
+                padding: 0.75rem;
+            }
+        }
+
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .card-3d, .program-card-3d, .btn-3d, .img-3d, .floating, .stat-3d, .gallery-item {
+                animation: none;
+                transform: none;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- 3D Cursor Follower -->
+    <div class="cursor-follower"></div>
+
+    <!-- Navbar/Header -->
+    <header class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+            <a href="#home" class="text-3xl font-extrabold text-primary-teal hover:text-secondary-coral transition duration-300 flex items-center" onclick="navigate('home')">
+                <i class="fas fa-heartbeat mr-2"></i> AHWI
+            </a>
+            <div class="hidden md:flex space-x-8 text-lg">
+                <a href="#home" class="nav-link hover:text-primary-teal py-1 transition duration-200" data-page="home" onclick="navigate('home')">Home</a>
+                <a href="#about" class="nav-link hover:text-primary-teal py-1 transition duration-200" data-page="about" onclick="navigate('about')">About Us</a>
+                <a href="#programs" class="nav-link hover:text-primary-teal py-1 transition duration-200" data-page="programs" onclick="navigate('programs')">Our Programs</a>
+                <a href="#resources" class="nav-link hover:text-primary-teal py-1 transition duration-200" data-page="resources" onclick="navigate('resources')">Resources</a>
+                <a href="#contact" class="nav-link hover:text-primary-teal py-1 transition duration-200" data-page="contact" onclick="navigate('contact')">Support Us</a>
+                <button class="btn-3d bg-secondary-coral text-white px-4 py-2 rounded-lg font-semibold hover:bg-primary-teal transition duration-300" onclick="openModal('appointment-modal')">
+                    <i class="fas fa-calendar-check mr-2"></i>Book Appointment
+                </button>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-primary-teal focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Drawer (Hidden by default) -->
+    <div id="mobile-menu" class="fixed top-20 left-0 w-full h-auto bg-white shadow-xl z-40 md:hidden transition-transform duration-300 -translate-y-full">
+        <div class="flex flex-col space-y-4 p-6 text-center text-xl">
+            <a href="#home" class="nav-link block py-2 hover:bg-bg-light rounded-lg transition duration-200" data-page="home" onclick="navigate('home'); toggleMobileMenu()">Home</a>
+            <a href="#about" class="nav-link block py-2 hover:bg-bg-light rounded-lg transition duration-200" data-page="about" onclick="navigate('about'); toggleMobileMenu()">About Us</a>
+            <a href="#programs" class="nav-link block py-2 hover:bg-bg-light rounded-lg transition duration-200" data-page="programs" onclick="navigate('programs'); toggleMobileMenu()">Our Programs</a>
+            <a href="#resources" class="nav-link block py-2 hover:bg-bg-light rounded-lg transition duration-200" data-page="resources" onclick="navigate('resources'); toggleMobileMenu()">Resources</a>
+            <a href="#contact" class="nav-link block py-2 hover:bg-bg-light rounded-lg transition duration-200" data-page="contact" onclick="navigate('contact'); toggleMobileMenu()">Support Us</a>
+            <button class="btn-3d bg-secondary-coral text-white px-4 py-2 rounded-lg font-semibold hover:bg-primary-teal transition duration-300" onclick="openModal('appointment-modal'); toggleMobileMenu()">
+                <i class="fas fa-calendar-check mr-2"></i>Book Appointment
+            </button>
+        </div>
+    </div>
+
+    <!-- Page Contents Container -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+
+        <!-- 1. Home Page -->
+        <section id="home" data-page="home" class="page-content block">
+            <div class="flex flex-col md:flex-row items-center justify-between min-h-[80vh] py-16 hero-3d">
+                <!-- Text Content -->
+                <div class="md:w-1/2 mb-12 md:mb-0 animate-fadeInUp hero-content-3d" style="animation-delay: 0.1s;">
+                    <span class="text-secondary-coral text-lg font-semibold uppercase tracking-widest block mb-2">Empowering the Future in Ogun Waterside</span>
+                    <h1 class="text-5xl lg:text-7xl font-extrabold text-gray-900 leading-tight mb-6">
+                        Bridging the Gap: <span class="text-primary-teal">Health, Hope, and Dignity</span> for Every Woman.
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        The Aisha Health and Wellness Initiative (AHWI) delivers crucial maternal, adolescent, and preventative health services directly to girls and women in the Ogun Waterside Local Government Area of Ogun State, Nigeria. We believe health access is a fundamental right.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#programs" onclick="navigate('programs')" class="btn-3d bg-secondary-coral text-white text-xl font-bold py-3 px-8 rounded-full shadow-lg hover:bg-primary-teal transform transition duration-500 animate-pulseShadow text-center">
+                            Explore Our Community Impact
+                        </a>
+                        <button class="btn-3d bg-accent-gold text-primary-teal text-xl font-bold py-3 px-8 rounded-full shadow-lg hover:bg-white transform transition duration-500 text-center" onclick="openModal('donation-modal')">
+                            <i class="fas fa-hand-holding-heart mr-2"></i>Donate Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Image Showcase (Creative Image Application 1: Blob Mask) -->
+                <div class="md:w-5/12 animate-fadeInUp img-3d" style="animation-delay: 0.3s;">
+                    <div class="hero-image-container floating">
+                        <!-- Background layer for depth -->
+                        <div class="absolute inset-0 bg-accent-gold rounded-full transform translate-x-3 translate-y-3 z-0 opacity-70"></div>
+                        <div class="hero-image-mask blob z-10">
+                            <!-- Real Unsplash Image -->
+                            <img src="https://images.unsplash.com/photo-1582211594533-268f4d7e3b65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="African women in community health setting" onerror="this.onerror=null; this.src='https://placehold.co/600x600/008080/ffffff?text=AHWI+Focus'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Stats Section -->
+            <div class="py-16 bg-primary-teal rounded-2xl text-white mt-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold mb-4">Our Impact in Numbers</h2>
+                    <p class="text-xl max-w-3xl mx-auto">Through dedicated community work, we have made measurable differences in women's health across Ogun Waterside</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                    <div class="stat-3d text-center p-6 bg-white/10 rounded-xl backdrop-blur-sm">
+                        <div class="text-5xl font-bold text-accent-gold mb-2 animate-stats">1,250+</div>
+                        <p class="text-lg">Women Served Annually</p>
+                    </div>
+                    <div class="stat-3d text-center p-6 bg-white/10 rounded-xl backdrop-blur-sm">
+                        <div class="text-5xl font-bold text-accent-gold mb-2 animate-stats">85%</div>
+                        <p class="text-lg">Reduction in Maternal Complications</p>
+                    </div>
+                    <div class="stat-3d text-center p-6 bg-white/10 rounded-xl backdrop-blur-sm">
+                        <div class="text-5xl font-bold text-accent-gold mb-2 animate-stats">42</div>
+                        <p class="text-lg">Trained Community Health Workers</p>
+                    </div>
+                    <div class="stat-3d text-center p-6 bg-white/10 rounded-xl backdrop-blur-sm">
+                        <div class="text-5xl font-bold text-accent-gold mb-2 animate-stats">15</div>
+                        <p class="text-lg">Villages Reached</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. About Us Page -->
+        <section id="about" data-page="about" class="page-content">
+            <div class="py-20">
+                <h2 class="text-5xl font-bold text-center text-primary-teal mb-4 animate-fadeInUp">Our Story, Our Mission, Our People</h2>
+                <p class="text-xl text-center text-gray-600 mb-16 max-w-3xl mx-auto animate-fadeInUp" style="animation-delay: 0.2s;">
+                    We are a grassroots initiative founded by dedicated local residents and Nigerian diaspora professionals committed to reversing poor health trends in our region.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-10 mb-16">
+                    <!-- Section 1: History -->
+                    <div class="card-3d p-8 bg-white rounded-xl shadow-lg border-t-4 border-secondary-coral animate-fadeInUp" style="animation-delay: 0.3s;">
+                        <div class="card-3d-inner">
+                            <i class="fas fa-history text-4xl text-secondary-coral mb-4"></i>
+                            <h3 class="text-2xl font-semibold mb-3 text-gray-900">The Challenge We Address</h3>
+                            <p class="text-gray-600">
+                                In Ogun Waterside, women face significant barriers to care: long travel distances to clinics, high poverty rates, and lack of culturally sensitive health information. This results in preventable deaths and high rates of adolescent pregnancy.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Section 2: Core Values -->
+                    <div class="card-3d p-8 bg-white rounded-xl shadow-lg border-t-4 border-primary-teal animate-fadeInUp" style="animation-delay: 0.4s;">
+                        <div class="card-3d-inner">
+                            <i class="fas fa-heart text-4xl text-primary-teal mb-4"></i>
+                            <h3 class="text-2xl font-semibold mb-3 text-gray-900">Community-Led Approach</h3>
+                            <p class="text-gray-600">
+                                Our success is built on deep community engagement. We train local women as health ambassadors to ensure our programs are trustworthy, relevant, and sustainable from within the Waterside communities themselves.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Section 3: Our Vision -->
+                    <div class="card-3d p-8 bg-white rounded-xl shadow-lg border-t-4 border-accent-gold animate-fadeInUp" style="animation-delay: 0.5s;">
+                        <div class="card-3d-inner">
+                            <i class="fas fa-bullseye text-4xl text-accent-gold mb-4"></i>
+                            <h3 class="text-2xl font-semibold mb-3 text-gray-900">Our Goals</h3>
+                            <p class="text-gray-600">
+                                By 2025, we aim to reduce maternal mortality rates in our target area by 25% and increase the use of modern contraceptives among adolescents by 40% through accessible education and free supplies.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Section -->
+                <div class="mb-16 animate-fadeInUp" style="animation-delay: 0.6s;">
+                    <h3 class="text-3xl font-bold text-center text-secondary-coral mb-8">Meet Our Team</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        <div class="card-3d text-center p-6 bg-white rounded-xl shadow-lg">
+                            <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary-teal img-3d">
+                                <img src="1.jpg" alt="Dr. Aisha Balogun" class="w-full h-full object-cover">
+                            </div>
+                            <h4 class="text-xl font-bold text-primary-teal">Dr. Aisha Balogun</h4>
+                            <p class="text-gray-600 mb-2">Founder and Executive Director</p>
+                            <p class="text-sm text-gray-500">Public Health Specialist with 15+ years experience in maternal health</p>
+                        </div>
+                        <div class="card-3d text-center p-6 bg-white rounded-xl shadow-lg">
+                            <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-secondary-coral img-3d">
+                                <img src="2.jpg" alt="Mrs. Folake Adeyemi" class="w-full h-full object-cover">
+                            </div>
+                            <h4 class="text-xl font-bold text-primary-teal">Mrs. Folake Adeyemi</h4>
+                            <p class="text-gray-600 mb-2">Program Director</p>
+                            <p class="text-sm text-gray-500">Community Health Expert with deep roots in Ogun Waterside</p>
+                        </div>
+                        <div class="card-3d text-center p-6 bg-white rounded-xl shadow-lg">
+                            <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-accent-gold img-3d">
+                                <img src="3.webp" alt="Mr. Tunde Johnson" class="w-full h-full object-cover">
+                            </div>
+                            <h4 class="text-xl font-bold text-primary-teal">Mr. Tunde Johnson</h4>
+                            <p class="text-gray-600 mb-2">Finance and Operations</p>
+                            <p class="text-sm text-gray-500">CPA with expertise in nonprofit financial management</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Gallery (Creative Image Application 3: Gallery Grid) -->
+                <div class="mt-20 animate-fadeInUp" style="animation-delay: 0.7s;">
+                    <h3 class="text-3xl font-bold text-center text-secondary-coral mb-8">Impact in Action</h3>
+                    <div class="gallery-grid-3d max-w-4xl mx-auto">
+                        <div class="gallery-item rounded-xl overflow-hidden shadow-xl">
+                            <img src="7.jpg" alt="Mother and baby at clinic" class="w-full h-48 object-cover transition duration-500 hover:scale-110">
+                        </div>
+                        <div class="gallery-item rounded-xl overflow-hidden shadow-xl">
+                            <img src="4.jpg" alt="Girls in a classroom" class="w-full h-48 object-cover transition duration-500 hover:scale-110">
+                        </div>
+                        <div class="gallery-item rounded-xl overflow-hidden shadow-xl">
+                            <img src="5.jpeg" alt="Local health ambassador teaching" class="w-full h-48 object-cover transition duration-500 hover:scale-110">
+                        </div>
+                        <div class="gallery-item rounded-xl overflow-hidden shadow-xl">
+                            <img src="6.jpg" alt="View of Ogun Waterside" class="w-full h-48 object-cover transition duration-500 hover:scale-110">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Programs Page -->
+        <section id="programs" data-page="programs" class="page-content">
+            <div class="py-20">
+                <h2 class="text-5xl font-bold text-center text-secondary-coral mb-4 animate-fadeInUp">Our Three Pillars of Impact</h2>
+                <p class="text-xl text-center text-gray-600 mb-16 max-w-4xl mx-auto animate-fadeInUp" style="animation-delay: 0.2s;">
+                    Each program is a direct response to a community need, focusing on education, accessibility, and local empowerment.
+                </p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Program 1: Maternal Health (Creative Image Application 2: Background with Overlay) -->
+                    <div class="program-card-3d bg-white p-6 rounded-xl shadow-lg border-l-4 border-primary-teal animate-fadeInUp" style="animation-delay: 0.3s;">
+                        <div class="program-card-image" style="background-image: url('9.avif')">
+                            <div class="image-overlay">Safe Motherhood</div>
+                        </div>
+                        <h4 class="text-2xl font-bold text-primary-teal mb-2">Safe Motherhood Initiative</h4>
+                        <p class="text-gray-600 mb-4">
+                            We provide free education on danger signs in pregnancy and host monthly community clinics. A core focus is the Emergency Transport Voucher Scheme, ensuring rural pregnant women can reach the nearest General Hospital for delivery and emergencies.
+                        </p>
+                        <button class="btn-3d bg-primary-teal text-white py-2 px-4 rounded-lg w-full hover:bg-deep-teal transition duration-300" onclick="openModal('appointment-modal')">
+                            <i class="fas fa-calendar-plus mr-2"></i>Schedule Antenatal Visit
+                        </button>
+                    </div>
+
+                    <!-- Program 2: Adolescent Health -->
+                    <div class="program-card-3d bg-white p-6 rounded-xl shadow-lg border-l-4 border-secondary-coral animate-fadeInUp" style="animation-delay: 0.4s;">
+                        <div class="program-card-image" style="background-image: url('11.webp')">
+                             <div class="image-overlay">Girls' Confidence</div>
+                        </div>
+                        <h4 class="text-2xl font-bold text-secondary-coral mb-2">Adolescent Sexual and Reproductive Health</h4>
+                        <p class="text-gray-600 mb-4">
+                            Running school and community-based workshops for girls aged 10-18. Topics include menstrual health management, family planning methods, self-esteem, and building resistance to gender-based violence.
+                        </p>
+                        <button class="btn-3d bg-secondary-coral text-white py-2 px-4 rounded-lg w-full hover:bg-light-coral transition duration-300" onclick="openModal('appointment-modal')">
+                            <i class="fas fa-user-plus mr-2"></i>Register for Workshop
+                        </button>
+                    </div>
+
+                    <!-- Program 3: General Wellness -->
+                    <div class="program-card-3d bg-white p-6 rounded-xl shadow-lg border-l-4 border-accent-gold animate-fadeInUp" style="animation-delay: 0.5s;">
+                         <div class="program-card-image" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80')">
+                            <div class="image-overlay">Wellness and Nutrition</div>
+                        </div>
+                        <h4 class="text-2xl font-bold text-accent-gold mb-2">Community Wellness and Nutrition</h4>
+                        <p class="text-gray-600 mb-4">
+                            Annual screening camps for chronic diseases like hypertension and diabetes, common among older women. We also conduct practical, low-cost nutrition education focused on optimizing local foods for better family health outcomes.
+                        </p>
+                        <button class="btn-3d bg-accent-gold text-primary-teal py-2 px-4 rounded-lg w-full hover:bg-white transition duration-300" onclick="openModal('appointment-modal')">
+                            <i class="fas fa-stethoscope mr-2"></i>Book Health Screening
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="mt-20 animate-fadeInUp" style="animation-delay: 0.6s;">
+                    <h3 class="text-3xl font-bold text-center text-primary-teal mb-8">Upcoming Community Events</h3>
+                    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="flex items-start p-4 border-l-4 border-secondary-coral bg-bg-light rounded-lg">
+                                <div class="bg-primary-teal text-white p-3 rounded-lg mr-4 text-center">
+                                    <div class="text-xl font-bold">15</div>
+                                    <div class="text-sm">OCT</div>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Free Health Screening Camp</h4>
+                                    <p class="text-gray-600">Community Center, Iwopin</p>
+                                    <p class="text-sm text-gray-500">9:00 AM - 3:00 PM</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 border-l-4 border-accent-gold bg-bg-light rounded-lg">
+                                <div class="bg-secondary-coral text-white p-3 rounded-lg mr-4 text-center">
+                                    <div class="text-xl font-bold">22</div>
+                                    <div class="text-sm">OCT</div>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Adolescent Health Workshop</h4>
+                                    <p class="text-gray-600">Girls Secondary School, Efire</p>
+                                    <p class="text-sm text-gray-500">10:00 AM - 1:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button class="btn-3d bg-primary-teal text-white py-2 px-6 rounded-lg hover:bg-deep-teal transition duration-300" onclick="openModal('appointment-modal')">
+                                <i class="fas fa-calendar-alt mr-2"></i>View Full Calendar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Resources Page -->
+        <section id="resources" data-page="resources" class="page-content">
+            <div class="py-20">
+                <h2 class="text-5xl font-bold text-center text-primary-teal mb-4 animate-fadeInUp">Downloadable Health Guides (Free)</h2>
+                <p class="text-xl text-center text-gray-600 mb-16 max-w-4xl mx-auto animate-fadeInUp" style="animation-delay: 0.2s;">
+                    Empower yourself with reliable, fact-checked information tailored to our local Nigerian context and available in simple language.
+                </p>
+
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <!-- Resource 1 -->
+                    <div class="card-3d p-6 bg-white rounded-xl shadow-md flex items-center hover:shadow-xl transition duration-300 animate-fadeInUp" style="animation-delay: 0.3s;">
+                        <div class="card-3d-inner flex items-center w-full">
+                            <i class="fas fa-file-medical text-4xl text-secondary-coral flex-shrink-0 mr-4"></i>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-semibold text-gray-900">Maternal and Antenatal Care Checklist </h4>
+                                <p class="text-gray-600">A comprehensive PDF guide detailing necessary checkups, dietary advice, and danger signs during all three trimesters. Available in both English and simplified Yoruba.</p>
+                            </div>
+                            <button class="btn-3d bg-primary-teal text-white py-2 px-4 rounded-lg ml-4 hover:bg-deep-teal transition duration-300">
+                                <i class="fas fa-download mr-2"></i>Download
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Resource 2 -->
+                    <div class="card-3d p-6 bg-white rounded-xl shadow-md flex items-center hover:shadow-xl transition duration-300 animate-fadeInUp" style="animation-delay: 0.4s;">
+                        <div class="card-3d-inner flex items-center w-full">
+                            <i class="fas fa-female text-4xl text-primary-teal flex-shrink-0 mr-4"></i>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-semibold text-gray-900">Understanding Menstrual Health (Ages 10-18)</h4>
+                                <p class="text-gray-600">A friendly handbook for young girls, demystifying the menstrual cycle, safe hygiene practices, and how to manage pain and discomfort naturally.</p>
+                            </div>
+                            <button class="btn-3d bg-secondary-coral text-white py-2 px-4 rounded-lg ml-4 hover:bg-light-coral transition duration-300">
+                                <i class="fas fa-download mr-2"></i>Download
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Resource 3 -->
+                    <div class="card-3d p-6 bg-white rounded-xl shadow-md flex items-center hover:shadow-xl transition duration-300 animate-fadeInUp" style="animation-delay: 0.5s;">
+                        <div class="card-3d-inner flex items-center w-full">
+                            <i class="fas fa-apple-alt text-4xl text-accent-gold flex-shrink-0 mr-4"></i>
+                            <div class="flex-grow">
+                                <h4 class="text-2xl font-semibold text-gray-900">Local Food Nutrition Guide</h4>
+                                <p class="text-gray-600">A visual guide showing how to combine staple Nigerian foods to achieve a balanced, protein-rich diet, optimized for pregnant and breastfeeding women.</p>
+                            </div>
+                            <button class="btn-3d bg-accent-gold text-primary-teal py-2 px-4 rounded-lg ml-4 hover:bg-white transition duration-300">
+                                <i class="fas fa-download mr-2"></i>Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Resources -->
+                <div class="mt-16 animate-fadeInUp" style="animation-delay: 0.6s;">
+                    <h3 class="text-3xl font-bold text-center text-secondary-coral mb-8">Educational Video Series</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden">
+                            <div class="relative pb-[56.25%] h-0">
+                                <img src="12.jpg" alt="Prenatal Care Video" class="absolute inset-0 w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                    <button class="bg-white/90 text-primary-teal rounded-full w-16 h-16 flex items-center justify-center hover:bg-white transition duration-300">
+                                        <i class="fas fa-play text-2xl ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">Essential Prenatal Care Tips</h4>
+                                <p class="text-gray-600 text-sm">Learn about important checkups, nutrition, and warning signs during pregnancy.</p>
+                            </div>
+                        </div>
+                        <div class="card-3d bg-white rounded-xl shadow-lg overflow-hidden">
+                            <div class="relative pb-[56.25%] h-0">
+                                <img src="14.jpg" alt="Adolescent Health Video" class="absolute inset-0 w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                    <button class="bg-white/90 text-secondary-coral rounded-full w-16 h-16 flex items-center justify-center hover:bg-white transition duration-300">
+                                        <i class="fas fa-play text-2xl ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg mb-2">Adolescent Health and Hygiene</h4>
+                                <p class="text-gray-600 text-sm">Important information for teenage girls about puberty, menstrual health, and self-care.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Contact/Support Page -->
+        <section id="contact" data-page="contact" class="page-content">
+            <div class="py-20">
+                <h2 class="text-5xl font-bold text-center text-secondary-coral mb-4 animate-fadeInUp">Be a Part of the Solution</h2>
+                <p class="text-xl text-center text-gray-600 mb-16 max-w-4xl mx-auto animate-fadeInUp" style="animation-delay: 0.2s;">
+                    Whether through your time, expertise, or financial contribution, every act of support directly impacts a woman's life in Ogun Waterside.
+                </p>
+
+                <div class="flex flex-col lg:flex-row gap-12 max-w-5xl mx-auto">
+                    <!-- Contact Form -->
+                    <div class="lg:w-1/2 card-3d bg-white p-8 rounded-xl shadow-2xl animate-fadeInUp" style="animation-delay: 0.3s;">
+                        <h3 class="text-3xl font-bold text-primary-teal mb-6">Connect with Our Team</h3>
+                        <form id="contactForm">
+                            <div class="mb-4">
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Your Message (Volunteer, Partnership, General Inquiry)</label>
+                                <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800"></textarea>
+                            </div>
+                            <button type="submit" class="btn-3d w-full bg-secondary-coral text-white font-bold py-3 px-6 rounded-lg hover:bg-primary-teal transition duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                        <!-- Form success/error message box, styled as a safe alternative to alert() -->
+                        <div id="formMessage" class="mt-4 p-3 rounded-lg text-center hidden font-semibold"></div>
+                    </div>
+
+                    <!-- Contact Details & Donation CTA -->
+                    <div class="lg:w-1/2 card-3d bg-primary-teal p-8 rounded-xl shadow-2xl text-white flex flex-col justify-between animate-fadeInUp" style="animation-delay: 0.4s;">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6 text-accent-gold">Ways to Connect</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope text-secondary-coral text-xl mr-3"></i>
+                                    <p>Email: <a href="mailto:info@aishawellness.org" class="underline hover:text-accent-gold">info@aishawellness.org</a></p>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-phone text-secondary-coral text-xl mr-3"></i>
+                                    <p>Phone: <a href="tel:+2348000012494" class="underline hover:text-accent-gold">+234 800-001-2494</a></p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-map-marker-alt text-secondary-coral text-xl mr-3 mt-1"></i>
+                                    <p>Office: C/O Waterside Community Hall, Ogun Waterside LGA (By appointment only)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Donation Section -->
+                        <div class="mt-8 pt-6 border-t border-primary-teal-light">
+                            <h3 class="text-3xl font-bold mb-4 text-accent-gold">Fund Our Work</h3>
+                            <p class="mb-4">Every Naira helps us provide life-saving prenatal vitamins, menstrual supplies, and emergency transport for women in need.</p>
+                            
+                            <!-- Donation Progress -->
+                            <div class="mb-6">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Raised: ₦250,000</span>
+                                    <span>Goal: ₦500,000</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="progress-bar h-2.5 rounded-full" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Donation Options -->
+                            <div class="grid grid-cols-3 gap-2 mb-4">
+                                <button class="bg-white/20 py-2 rounded-lg hover:bg-white/30 transition duration-300" onclick="selectDonation(1000)">₦1,000</button>
+                                <button class="bg-white/20 py-2 rounded-lg hover:bg-white/30 transition duration-300" onclick="selectDonation(5000)">₦5,000</button>
+                                <button class="bg-white/20 py-2 rounded-lg hover:bg-white/30 transition duration-300" onclick="selectDonation(10000)">₦10,000</button>
+                            </div>
+                            
+                            <!-- Custom Donation -->
+                            <div class="flex mb-4">
+                                <input type="number" id="custom-amount" placeholder="Other amount" class="flex-grow p-2 rounded-l-lg text-gray-800 outline-none">
+                                <button class="bg-accent-gold text-primary-teal font-bold py-2 px-4 rounded-r-lg hover:bg-white transition duration-300" onclick="processCustomDonation()">
+                                    Donate
+                                </button>
+                            </div>
+                            
+                            <!-- Donation Link (Mock External Link) -->
+                            <button class="btn-3d w-full bg-accent-gold text-primary-teal font-bold py-3 px-6 rounded-lg shadow-md hover:bg-white transition duration-300" onclick="openModal('donation-modal')">
+                                Make a Donation Today
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary-teal text-white py-12 mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-start">
+                <div class="mb-8 md:mb-0 md:w-1/3">
+                    <a href="#home" class="text-2xl font-extrabold flex items-center mb-4" onclick="navigate('home')">
+                        <i class="fas fa-heartbeat mr-2"></i> AHWI
+                    </a>
+                    <p class="text-sm opacity-80 mb-4">Committed to the women and girls of Ogun Waterside, Ogun State, Nigeria.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-accent-gold transition duration-300">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-accent-gold transition duration-300">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-accent-gold transition duration-300">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-accent-gold transition duration-300">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Newsletter Subscription -->
+                <div class="md:w-1/3 mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4 text-accent-gold">Stay Updated</h3>
+                    <p class="mb-4">Subscribe to our newsletter for updates on our programs and impact.</p>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                        <button type="submit" class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <p id="newsletter-message" class="mt-2 text-sm hidden"></p>
+                </div>
+                
+                <div class="md:w-1/3">
+                    <h3 class="text-xl font-bold mb-4 text-accent-gold">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-accent-gold transition duration-300" onclick="navigate('home')">Home</a></li>
+                        <li><a href="#about" class="hover:text-accent-gold transition duration-300" onclick="navigate('about')">About Us</a></li>
+                        <li><a href="#programs" class="hover:text-accent-gold transition duration-300" onclick="navigate('programs')">Our Programs</a></li>
+                        <li><a href="#resources" class="hover:text-accent-gold transition duration-300" onclick="navigate('resources')">Resources</a></li>
+                        <li><a href="#contact" class="hover:text-accent-gold transition duration-300" onclick="navigate('contact')">Support Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-8 pt-8 text-center">
+                <p>&copy; <span id="current-year"></span> Aisha Health and Wellness Initiative (AHWI). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Appointment Booking Modal -->
+    <div id="appointment-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-primary-teal">Book an Appointment</h2>
+                <button class="text-gray-500 hover:text-gray-700 text-xl" onclick="closeModal('appointment-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="appointment-form" class="appointment-form">
+                <div class="mb-4">
+                    <label for="appointment-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="appointment-name" name="name" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                </div>
+                <div class="mb-4">
+                    <label for="appointment-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <input type="tel" id="appointment-phone" name="phone" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                </div>
+                <div class="mb-4">
+                    <label for="appointment-service" class="block text-sm font-medium text-gray-700 mb-1">Service Needed</label>
+                    <select id="appointment-service" name="service" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                        <option value="">Select a service</option>
+                        <option value="prenatal">Prenatal Care</option>
+                        <option value="adolescent">Adolescent Health Workshop</option>
+                        <option value="screening">Health Screening</option>
+                        <option value="nutrition">Nutrition Counseling</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="appointment-date" class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
+                    <input type="date" id="appointment-date" name="date" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                </div>
+                <div class="mb-6">
+                    <label for="appointment-message" class="block text-sm font-medium text-gray-700 mb-1">Additional Information</label>
+                    <textarea id="appointment-message" name="message" rows="3" class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800"></textarea>
+                </div>
+                <button type="submit" class="btn-3d w-full bg-primary-teal text-white font-bold py-3 px-6 rounded-lg hover:bg-deep-teal transition duration-300">
+                    Book Appointment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donation-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-primary-teal">Make a Donation</h2>
+                <button class="text-gray-500 hover:text-gray-700 text-xl" onclick="closeModal('donation-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="donation-counter mb-6">
+                <h3 class="text-2xl font-bold mb-2">Help Us Reach Our Goal</h3>
+                <div class="text-4xl font-bold mb-2">₦250,000 <span class="text-xl">/ ₦500,000</span></div>
+                <div class="w-full bg-white/30 rounded-full h-3 mb-4">
+                    <div class="progress-bar h-3 rounded-full" style="width: 50%"></div>
+                </div>
+                <p class="text-lg">Your donation will provide essential health services to women in Ogun Waterside</p>
+            </div>
+            <form id="donation-form">
+                <div class="mb-4">
+                    <label for="donor-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="donor-name" name="name" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                </div>
+                <div class="mb-4">
+                    <label for="donor-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="donor-email" name="email" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                </div>
+                <div class="mb-4">
+                    <label for="donation-amount" class="block text-sm font-medium text-gray-700 mb-1">Donation Amount (₦)</label>
+                    <input type="number" id="donation-amount" name="amount" min="100" step="100" value="5000" required class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800">
+                </div>
+                <div class="mb-6">
+                    <label for="donation-message" class="block text-sm font-medium text-gray-700 mb-1">Message (Optional)</label>
+                    <textarea id="donation-message" name="message" rows="2" class="w-full px-4 py-3 bg-bg-light border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal transition duration-300 outline-none text-gray-800"></textarea>
+                </div>
+                <button type="submit" class="btn-3d w-full bg-secondary-coral text-white font-bold py-3 px-6 rounded-lg hover:bg-primary-teal transition duration-300">
+                    <i class="fas fa-heart mr-2"></i>Donate Now
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript for Navigation, Form Handling, and 3D Effects -->
+    <script>
+        const pages = document.querySelectorAll('.page-content');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        // Function to show the selected page and update URL hash
+        function navigate(pageId) {
+            // Hide all pages
+            pages.forEach(page => {
+                page.style.display = 'none';
+                page.style.animation = 'none'; // Reset animation
+            });
+
+            // Show the target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                // Trigger the fade-in animation
+                targetPage.style.animation = 'fadeInUp 0.8s ease-out both';
+
+                // Update URL hash without causing a full refresh
+                history.pushState(null, '', `#${pageId}`);
+
+                // Update active link styling
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        // Handle initial load based on URL hash
+        function initialLoad() {
+            const hash = window.location.hash.substring(1);
+            const initialPage = hash || 'home';
+            navigate(initialPage);
+        }
+
+        // Handle back/forward navigation using popstate
+        window.addEventListener('popstate', initialLoad);
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const isExpanded = mobileMenu.classList.contains('translate-y-0');
+            if (isExpanded) {
+                mobileMenu.classList.replace('translate-y-0', '-translate-y-full');
+            } else {
+                mobileMenu.classList.replace('-translate-y-full', 'translate-y-0');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        // Contact Form Submission Mock
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formMessage = document.getElementById('formMessage');
+            
+            // Mock submission logic
+            console.log('Form Submitted!');
+
+            // Display success message (Custom styled div used instead of alert())
+            formMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+            formMessage.classList.add('bg-green-100', 'text-green-700');
+            formMessage.innerHTML = '<strong>Success!</strong> Your message has been received by our mock server. We will be in touch!';
+            
+            // Clear the form
+            this.reset();
+            
+            // Hide the message after 5 seconds
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+
+        // Appointment Form Submission
+        document.getElementById('appointment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            closeModal('appointment-modal');
+            
+            // Display success message
+            const formMessage = document.getElementById('formMessage');
+            formMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+            formMessage.classList.add('bg-green-100', 'text-green-700');
+            formMessage.innerHTML = '<strong>Appointment Booked!</strong> We will contact you to confirm your appointment.';
+            
+            // Clear the form
+            this.reset();
+            
+            // Hide the message after 5 seconds
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+
+        // Donation Form Submission
+        document.getElementById('donation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            closeModal('donation-modal');
+            
+            // Display success message
+            const formMessage = document.getElementById('formMessage');
+            formMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+            formMessage.classList.add('bg-green-100', 'text-green-700');
+            formMessage.innerHTML = '<strong>Thank you for your donation!</strong> Your contribution will make a difference in women\'s lives.';
+            
+            // Clear the form
+            this.reset();
+            
+            // Hide the message after 5 seconds
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+
+        // Newsletter Form Submission
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            const newsletterMessage = document.getElementById('newsletter-message');
+            
+            // Mock submission logic
+            console.log('Newsletter subscription:', email);
+
+            // Display success message
+            newsletterMessage.classList.remove('hidden', 'text-red-500');
+            newsletterMessage.classList.add('text-accent-gold');
+            newsletterMessage.textContent = 'Thank you for subscribing to our newsletter!';
+            
+            // Clear the form
+            this.reset();
+            
+            // Hide the message after 5 seconds
+            setTimeout(() => {
+                newsletterMessage.classList.add('hidden');
+            }, 5000);
+        });
+
+        // Modal Functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // Close modal when clicking outside the content
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal(this.id);
+                }
+            });
+        });
+
+        // Donation Functions
+        function selectDonation(amount) {
+            document.getElementById('donation-amount').value = amount;
+        }
+
+        function processCustomDonation() {
+            const customAmount = document.getElementById('custom-amount').value;
+            if (customAmount && customAmount > 0) {
+                selectDonation(customAmount);
+                openModal('donation-modal');
+            }
+        }
+
+        // 3D Cursor Follower
+        document.addEventListener('mousemove', (e) => {
+            cursorFollower.style.left = e.clientX + 'px';
+            cursorFollower.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursorFollower.classList.add('active');
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursorFollower.classList.remove('active');
+        });
+
+        // Add active class to interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .card-3d, .program-card-3d, .btn-3d');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorFollower.classList.add('active');
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursorFollower.classList.remove('active');
+            });
+        });
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Run initial page load logic
+        window.onload = initialLoad;
+    </script>
+</body>
+</html>
